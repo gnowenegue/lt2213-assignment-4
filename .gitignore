@@ -316,3 +316,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# local data files
+data/
