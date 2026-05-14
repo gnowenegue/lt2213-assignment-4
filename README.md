@@ -1,6 +1,6 @@
 # LT2213 Assignment 4 — LSTMs and Transformers for Word Sense Disambiguation
 
-This repository contains the materials for Assignment 3 of LT2213 Computational Semantics.
+This repository contains the materials for Assignment 4 of LT2213 Computational Semantics.
 
 ## Setup
 
@@ -12,9 +12,9 @@ This repository contains the materials for Assignment 3 of LT2213 Computational 
 
 2. **Activate the virtual environment:**
 
-     ```bash
-     source .venv/bin/activate
-     ```
+   ```bash
+   source .venv/bin/activate
+   ```
 
 3. **Install dependencies:**
 
@@ -22,8 +22,18 @@ This repository contains the materials for Assignment 3 of LT2213 Computational 
    pip install -r packages.txt
    ```
 
-4. **Install pre-commit hooks:**
+4. **Set up IPyKernel:**
+
+   ```bash
+   python -m ipykernel install --user --name=lt2213-assignment-4 --display-name "LT2213 Assignment 4"
+   ```
+
+5. **Install pre-commit hooks:**
 
    ```bash
    pre-commit install
    ```
+
+## Development
+
+Ensure you select the **LT2213 Assignment 4** kernel. In VS Code, you can do this by clicking the kernel name in the top-right corner of the notebook editor and selecting it from the list.
