@@ -80,6 +80,7 @@ import torch.nn as nn
 import random
 import csv
 import os
+from collections import Counter, defaultdict
 
 cuda_available = torch.cuda.is_available()
 mps_available = torch.backends.mps.is_available()
@@ -194,11 +195,54 @@ print(f"Testing data size: {len(test_data)}")
 #
 
 # %%
-def mcs_baseline(data):
-    
+def mcs_baseline(train_data, test_data):
+
     # your code goes here
-    
-    return
+    """
+    most common sense (MCS) baseline.
+    1. finds the most frequent sense for each word-form in the training set.
+    2. uses that sense to predict labels for the test set.
+    """
+    # dictionary to store sense frequencies for each word form
+    # key: word form (e.g., 'bank.n'), value: counter of word senses
+    frequencies = defaultdict(Counter)
+
+    # step 1: "train" - count word sense occurrences in the training data
+    for row in train_data:
+        train_word_sense = row[0]   # column 1: word sense
+        train_word_form = row[1]    # column 2: word form
+
+        frequencies[train_word_form][train_word_sense] += 1
+
+    # step 2: "test" - evaluate accuracy on the testing data
+    correct_predictions = 0
+    total_examples = len(test_data)
+
+    for row in test_data:
+        test_word_sense = row[0]
+        test_word_form = row[1]
+
+        counts = frequencies.get(test_word_form)
+
+        # predict the MCS for this word form
+        prediction = max(
+            counts,
+            key=counts.get,
+            default=None
+        ) if counts else None
+
+        if prediction == test_word_sense:
+            correct_predictions += 1
+
+    # calculate and return accuracy
+    accuracy = correct_predictions / total_examples if total_examples > 0 else 0
+    return accuracy
+
+
+# %%
+# calculate and print the baseline accuracy
+baseline_accuracy = mcs_baseline(train_data, test_data)
+print(f"MCS Baseline Accuracy: {baseline_accuracy:.4f}")
 
 
 # %% [markdown]
